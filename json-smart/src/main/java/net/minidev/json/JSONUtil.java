@@ -53,6 +53,12 @@ public class JSONUtil {
 	}
 
 	public static String getIsName(String key) {
+		char k1 = key.charAt(0);
+		if ((k1 == 'i' || k1 == 'I') && key.charAt(1) == 's')
+			// If the method we are getting the 'IsName' for already starts
+			// with 'is' or 'Is', do not add another 'is' to the method name.
+			return key;
+
 		int len = key.length();
 		char[] b = new char[len + 2];
 		b[0] = 'i';
