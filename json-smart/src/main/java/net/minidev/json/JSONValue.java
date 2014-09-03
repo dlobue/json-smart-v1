@@ -607,9 +607,19 @@ public class JSONValue {
 							Class<?> c2 = field.getType();
 							if (c2 == Boolean.TYPE || c2 == Boolean.class) {
 								g = JSONUtil.getIsName(field.getName());
-								mtd = cls.getDeclaredMethod(g);
+								try {
+									mtd = cls.getDeclaredMethod(g);
+								} catch (NoSuchMethodException e) {
+								} catch (SecurityException e) {
+								}
 							}
 						}
+						if (mtd == null)
+							try {
+								mtd = cls.getDeclaredMethod(field.getName());
+							} catch (NoSuchMethodException e) {
+							} catch (SecurityException e) {
+							}
 						if (mtd == null)
 							continue;
 						v = mtd.invoke(value);
